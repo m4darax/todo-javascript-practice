@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Todo</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
-<body style="background-color: gray" >
+
+<body style="background-color: gray">
 
     <div class="container">
         <div class="row mt-4">
@@ -17,7 +20,7 @@
                         <form action="" id="task">
                             <div class="form-group">
                                 <label for="">Name</label>
-                                <input type="text" id="name" class="form-control" placeholder="Add Name" >
+                                <input type="text" id="name" class="form-control" placeholder="Add Name">
                                 <div id="emptyName"></div>
                             </div>
                             <div class="form-group">
@@ -53,21 +56,21 @@
                 description
             }
 
-            if( nameInput.value === "" && descriptionInput.value === "" ) {
-              console.log("No hay datos")
-              emptyName.innerHTML = `<p style="margin-top: 10px; border-top-right-radius: 10px; border-bottom-left-radius: 10px; padding: 5px;color: #FFF; background-color: #FF0000" >Debe ingresar un Nombre</p>`
-              emptyDescription.innerHTML = `<p style="margin-top: 10px; border-top-right-radius: 10px; border-bottom-left-radius: 10px; padding: 5px;color: #FFF; background-color: #FF0000" >Debe ingresar una descriptión</p>`
-            }else {
-              console.log("Si hay datos", task)
-              if( localStorage.getItem('tasks') === null ) {
-                  let tasks = []
-                  tasks.push(task)
-                  localStorage.setItem('tasks', JSON.stringify(tasks))
-              }else {
-                  let tasks = JSON.parse(localStorage.getItem('tasks'))
-                  tasks.push(task)
-                  localStorage.setItem('tasks', JSON.stringify(tasks))
-              }
+            if (nameInput.value === "" && descriptionInput.value === "") {
+                console.log("No hay datos")
+                emptyName.innerHTML = `<p style="margin-top: 10px; border-top-right-radius: 10px; border-bottom-left-radius: 10px; padding: 5px;color: #FFF; background-color: #FF0000" >Debe ingresar un Nombre</p>`
+                emptyDescription.innerHTML = `<p style="margin-top: 10px; border-top-right-radius: 10px; border-bottom-left-radius: 10px; padding: 5px;color: #FFF; background-color: #FF0000" >Debe ingresar una descriptión</p>`
+            } else {
+                console.log("Si hay datos", task)
+                if (localStorage.getItem('tasks') === null) {
+                    let tasks = []
+                    tasks.push(task)
+                    localStorage.setItem('tasks', JSON.stringify(tasks))
+                } else {
+                    let tasks = JSON.parse(localStorage.getItem('tasks'))
+                    tasks.push(task)
+                    localStorage.setItem('tasks', JSON.stringify(tasks))
+                }
             }
 
 
@@ -82,19 +85,27 @@
 
             try {
                 taskView.innerHTML = ''
-                for(let i = 0; i<tasks.length; i++) {
+                for (let i = 0; i < tasks.length; i++) {
+
                     let name = tasks[i].name
                     let description = tasks[i].description
                     taskView.innerHTML += `
-                    <div class="card text-white bg-dark mb-3" >
-                        <div class="card-header">
-                            <h2>${name}</h2>
+                    <div class="card mb-3 border-0">
+                        <div class="card-header bg-dark text-white">
+                            <h2 class="card-title">${name}</h2>
                         </div>
-                        <div class="card-body">
-                            <h3>${description}<h3>
+                        <div class="card-body bg-dark text-white">
+                            <h3 class="card-text">${description}</h3>
                         </div>
-                        <div class="card-footer">
-                            <a href="#" onclick="deleteTask('${name}')" class="btn btn-danger ">Delete</a>
+                        <div class="card-footer bg-dark">
+                            <div class="d-flex">
+                                <div class="mb-3">
+                                    <button type="button" class="btn btn-danger mr-2" onclick="deleteTask('${name}')">Delete</button>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-danger mr-2">Edit</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     `
@@ -108,19 +119,20 @@
             try {
                 console.log(name)
                 let tasks = JSON.parse(localStorage.getItem('tasks'))
-                for (let i= 0; i < tasks.length; i++) {
-                    if(tasks[i].name == name) {
+                for (let i = 0; i < tasks.length; i++) {
+                    if (tasks[i].name == name) {
                         tasks.splice(i, 1)
                     }
                 }
                 localStorage.setItem('tasks', JSON.stringify(tasks));
                 getTasks();
+                alert("Delete successful!! Gaaa")
             } catch (err) {
                 console.log("Error DELET: ", err)
             }
         }
 
-        if(localStorage.getItem('tasks')) {
+        if (localStorage.getItem('tasks')) {
             getTasks()
         }
 
@@ -129,4 +141,5 @@
     </script>
 
 </body>
+
 </html>
